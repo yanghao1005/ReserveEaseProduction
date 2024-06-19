@@ -62,8 +62,6 @@ function Topbar() {
         return "Reservation Table";
       case "/clients":
         return "Clients";
-      case "/account":
-        return "Account";
       default:
         return "";
     }
@@ -138,9 +136,6 @@ function Topbar() {
           </ListItem>
           <ListItem button onClick={() => handleNavigation("/clients")}>
             <ListItemText primary="Clients" />
-          </ListItem>
-          <ListItem button onClick={() => handleNavigation("/account")}>
-            <ListItemText primary="Account" />
           </ListItem>
         </SidebarList>
       </DrawerStyled>

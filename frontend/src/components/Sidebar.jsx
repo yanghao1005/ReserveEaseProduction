@@ -95,17 +95,6 @@ function Sidebar({ variant, open, onClose }) {
             </InactiveLink>
           )}
         </LinkWrapper>
-        <LinkWrapper to="/account">
-          {location.pathname === "/account" ? (
-            <ActiveLink button>
-              <ListItemText primary="Account" />
-            </ActiveLink>
-          ) : (
-            <InactiveLink button>
-              <ListItemText primary="Account" />
-            </InactiveLink>
-          )}
-        </LinkWrapper>
       </List>
     </SidebarContainer>
   );

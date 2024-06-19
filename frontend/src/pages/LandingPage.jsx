@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Button,
@@ -6,23 +6,24 @@ import {
   Container,
   AppBar,
   Toolbar,
+  TextField,
+  Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
-import heroImage from "../image/portfolio.png"; // Asegúrate de ajustar la ruta a la ubicación correcta de tu imagen
+import heroImage from "../image/portfolio.png"; // Ensure the correct path to your image
 
 const RootContainer = styled("div")(({ theme }) => ({
-  minHeight: "100vh",
   display: "flex",
   flexDirection: "column",
   backgroundColor: theme.palette.background.default,
   padding: 0,
   margin: 0,
+  height: "100vh",
 }));
 
 const Header = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  color: "#FFFFFF",
+  color: theme.palette.text.primary, // Darker text color
   [theme.breakpoints.down("sm")]: {
     fontSize: "2rem",
   },
@@ -35,91 +36,48 @@ const StyledButton = styled(Button)(({ theme }) => ({
     fontSize: "0.8rem",
     padding: theme.spacing(1, 2),
   },
-  backgroundColor: "#615EFC", // Botón de acción
-  color: theme.palette.background.default, // Texto del botón
+  backgroundColor: "#615EFC", // Action button color
+  color: theme.palette.background.default, // Button text color
   "&:hover": {
-    backgroundColor: theme.palette.secondary.main, // Botón de acción en hover
-    color: theme.palette.background.default, // Texto del botón en hover
+    backgroundColor: theme.palette.secondary.main, // Hover button color
+    color: theme.palette.background.default, // Hover button text color
   },
+  transition: "background-color 0.3s ease", // Add transition
+  borderRadius: "25px", // Increased border-radius
 }));
 
 const HeroSection = styled("div")(({ theme }) => ({
-  position: "relative",
-  textAlign: "center",
+  flex: "1 0 auto",
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
-  minHeight: "100vh",
+  justifyContent: "space-between",
+  textAlign: "left",
+  padding: theme.spacing(8, 0),
+  backgroundColor: theme.palette.background.default, // Improved contrast
   width: "100%",
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundImage: `url(${heroImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    zIndex: 1,
-  },
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.4))", // Gradiente negro
-    zIndex: 2,
-  },
 }));
 
 const HeroContent = styled("div")(({ theme }) => ({
-  position: "relative",
   zIndex: 3,
-  color: "#FFFFFF",
-  textAlign: "center",
-  width: "100%",
-  marginBottom: theme.spacing(20), // Aumentamos el espacio inferior para mover los features más abajo
-}));
-
-const FeaturesSection = styled("div")(({ theme }) => ({
-  padding: theme.spacing(6, 0),
-  color: theme.palette.text.primary,
-  width: "100%",
-  position: "relative",
-  zIndex: 3, // Asegura que los features estén sobre el overlay
-}));
-
-const FeatureItem = styled("div")(({ theme }) => ({
+  color: theme.palette.text.primary, // Darker text color
+  textAlign: "left",
   padding: theme.spacing(2),
-  textAlign: "center",
-  backgroundColor: "rgba(255, 255, 255, 0.8)", // Fondo claro semitransparente para buen contraste
-  color: theme.palette.text.primary,
-  borderRadius: "50%",
-  width: "150px",
-  height: "150px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+}));
+
+const HeroImage = styled("img")(({ theme }) => ({
+  width: "100%",
+  maxWidth: "500px",
+  height: "auto",
   margin: "0 auto",
-  boxShadow: theme.shadows[3],
-  [theme.breakpoints.down("sm")]: {
-    width: "100px",
-    height: "100px",
-  },
 }));
 
 const ToolbarButton = styled(Button)(({ theme }) => ({
-  color: "rgba(255, 255, 255)",
-  borderColor: "rgba(255, 255, 255)",
+  color: theme.palette.secondary.main,
+  borderColor: theme.palette.secondary.main,
   margin: theme.spacing(1),
   "&:hover": {
-    backgroundColor: theme.palette.secondary.main, // Fondo claro en hover
+    backgroundColor: theme.palette.secondary.main, // Light background on hover
+    color: "white",
   },
 }));
 
@@ -129,6 +87,9 @@ const ToolbarContainer = styled("div")({
 });
 
 const LandingPage = () => {
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
   return (
     <>
       <AppBar position="fixed" color="transparent" elevation={0}>
@@ -145,55 +106,30 @@ const LandingPage = () => {
       </AppBar>
       <RootContainer>
         <HeroSection>
-          <HeroContent>
-            <Header variant="h2" component="h1">
-              Welcome to ReserveEase
-            </Header>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Manage your restaurant reservations with ease.
-            </Typography>
-            <StyledButton variant="contained" component={Link} to="/login">
-              Get Started
-            </StyledButton>
-          </HeroContent>
-          <FeaturesSection>
-            <Container>
-              <Typography
-                variant="h4"
-                component="h2"
-                align="center"
-                gutterBottom
-              >
-                Our Features
-              </Typography>
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={6} md={4}>
-                  <FeatureItem>
-                    <Typography variant="h6" component="h3">
-                      Feature 1
-                    </Typography>
-                    <Typography>Description of feature 1.</Typography>
-                  </FeatureItem>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <FeatureItem>
-                    <Typography variant="h6" component="h3">
-                      Feature 2
-                    </Typography>
-                    <Typography>Description of feature 2.</Typography>
-                  </FeatureItem>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <FeatureItem>
-                    <Typography variant="h6" component="h3">
-                      Feature 3
-                    </Typography>
-                    <Typography>Description of feature 3.</Typography>
-                  </FeatureItem>
-                </Grid>
+          <Container>
+            <Grid container spacing={4} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <HeroContent>
+                  <Header variant="h2" component="h1">
+                    Welcome to ReserveEase
+                  </Header>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    Manage your restaurant reservations with ease.
+                  </Typography>
+                  <StyledButton
+                    variant="contained"
+                    component={Link}
+                    to="/login"
+                  >
+                    Get Started
+                  </StyledButton>
+                </HeroContent>
               </Grid>
-            </Container>
-          </FeaturesSection>
+              <Grid item xs={12} md={6}>
+                <HeroImage src={heroImage} alt="Hero" />
+              </Grid>
+            </Grid>
+          </Container>
         </HeroSection>
       </RootContainer>
     </>

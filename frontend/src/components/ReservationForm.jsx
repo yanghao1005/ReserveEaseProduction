@@ -33,7 +33,7 @@ const ReservationForm = ({
   const [clientEmail, setClientEmail] = useState("");
   const [reservationDate, setReservationDate] = useState("");
   const [guestCount, setGuestCount] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("pending");
   const [notes, setNotes] = useState("");
   const [clientId, setClientId] = useState(null);
   const [openClientForm, setOpenClientForm] = useState(false); // New state for ClientForm
@@ -60,16 +60,21 @@ const ReservationForm = ({
     }
   }, [reservation]);
 
-  function resetReservationForm() {
+  const resetReservationForm = () => {
     setClientName("");
     setClientPhoneNumber("");
     setClientEmail("");
     setReservationDate("");
     setGuestCount("");
-    setStatus("");
+    setStatus("pending");
     setNotes("");
     setClientId(null);
-  }
+  };
+
+  const handleClose = () => {
+    resetReservationForm();
+    onClose();
+  };
 
   const handleSubmit = async () => {
     try {
@@ -92,7 +97,7 @@ const ReservationForm = ({
       resetReservationForm();
 
       onReservationSaved();
-      onClose();
+      handleClose();
     } catch (error) {
       console.error("Error creating reservation:", error);
     }
@@ -104,7 +109,7 @@ const ReservationForm = ({
         await api.delete(`/reservations/${reservation.id}/`);
         resetReservationForm();
         onReservationSaved();
-        onClose();
+        handleClose();
       } catch (error) {
         console.error("Error deleting reservation:", error);
       }
@@ -143,7 +148,7 @@ const ReservationForm = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {reservation ? "Edit Reservation" : "Create Reservation"}
@@ -309,7 +314,7 @@ const ReservationForm = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
+        <Button onClick={handleClose} color="secondary">
           Cancel
         </Button>
         {reservation && (

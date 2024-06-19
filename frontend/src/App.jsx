@@ -7,7 +7,6 @@ import Register from "./pages/Register";
 import StatisticsPage from "./pages/StatisticsPage";
 import ReservationsOfTheDay from "./pages/ReservationsOfTheDay";
 import ClientsPage from "./pages/ClientsPage";
-import AccountPage from "./pages/AccountPage";
 import ReservationsCalendarPage from "./pages/ReservationsCalendarPage";
 import ReservationsTablePage from "./pages/ReservationsTablePage";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -59,7 +58,6 @@ function App() {
             />
             <Route path="/clients" element={<ClientsPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
-            <Route path="/account" element={<AccountPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
