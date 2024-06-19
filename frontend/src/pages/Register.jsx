@@ -65,7 +65,6 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(phoneNumber);
     try {
       await api.post("/users/", {
         email,
